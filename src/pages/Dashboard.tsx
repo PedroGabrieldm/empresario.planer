@@ -76,7 +76,6 @@ const Dashboard = () => {
 
       if (error) {
         // Se API falhar, tentar carregar do localStorage
-        console.log('API error, loading from localStorage:', error);
         const localProjects: Project[] = [];
         
         for (let i = 0; i < localStorage.length; i++) {
@@ -86,7 +85,7 @@ const Dashboard = () => {
               const projectData = JSON.parse(localStorage.getItem(key) || '');
               localProjects.push(projectData);
             } catch (e) {
-              console.log('Error parsing local project:', e);
+              // Skip invalid project data
             }
           }
         }
@@ -104,7 +103,6 @@ const Dashboard = () => {
       setProjects(projects || []);
       
     } catch (error) {
-      console.error('Error loading projects:', error);
       toast({
         title: "Erro ao carregar projetos",
         description: "Tente recarregar a página.",
@@ -179,7 +177,6 @@ const Dashboard = () => {
       setNewProject({ title: "", idea_text: "" });
       
     } catch (error) {
-      console.error('Error creating project:', error);
       toast({
         title: "Erro",
         description: "Não foi possível criar o projeto.",
@@ -197,7 +194,7 @@ const Dashboard = () => {
         .eq('id', projectId);
 
       if (error) {
-        console.log('API delete failed, removing from localStorage:', error);
+        // API delete failed, removing from localStorage
       }
       
       // Remove do localStorage também (se existir)
@@ -211,7 +208,6 @@ const Dashboard = () => {
       });
       
     } catch (error) {
-      console.error('Error deleting project:', error);
       toast({
         title: "Erro",
         description: "Não foi possível excluir o projeto.",

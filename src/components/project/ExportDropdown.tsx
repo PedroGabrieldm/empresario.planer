@@ -86,7 +86,7 @@ export const ExportDropdown = ({ project, projectOutput }: ExportDropdownProps) 
           break;
       }
     } catch (error) {
-      console.error('Export error:', error);
+      // Export error handled silently
       toast({
         title: "Erro",
         description: "Erro ao exportar arquivo. Tente novamente.",

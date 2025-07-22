@@ -66,7 +66,7 @@ export const VersionHistory = ({ projectId, currentVersion, onVersionRestored }:
         setVersions(versionData);
       }
     } catch (error) {
-      console.error('Error fetching versions:', error);
+      // Error fetching versions handled silently
     } finally {
       setLoading(false);
     }
@@ -101,7 +101,6 @@ export const VersionHistory = ({ projectId, currentVersion, onVersionRestored }:
         });
       }
     } catch (error) {
-      console.error('Error restoring version:', error);
       toast({
         title: "Erro",
         description: "Erro inesperado ao restaurar versão",

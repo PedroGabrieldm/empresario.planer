@@ -172,8 +172,6 @@ const ProjectView = () => {
         .single();
 
       if (projectError) {
-        console.log('Supabase error, trying localStorage:', projectError);
-        
         // Fallback to localStorage
         const localProject = localStorage.getItem(`project_${id}`);
         if (localProject) {
@@ -204,11 +202,6 @@ const ProjectView = () => {
         .maybeSingle();
 
       if (outputError || !outputData) {
-        if (outputError) {
-          console.log('Project outputs error, using mock data:', outputError);
-        } else {
-          console.log('No project outputs found, using mock data');
-        }
         
         // If no outputs exist or access is denied, create mock data
         const mockOutput = createMockProjectOutput(id!, projectData);
@@ -223,8 +216,6 @@ const ProjectView = () => {
       }
       
     } catch (error: any) {
-      console.error('Erro ao buscar projeto:', error);
-      
       // Show specific error for demo projects or not found projects
       toast({
         title: "Projeto não encontrado",
@@ -581,10 +572,6 @@ Tenho apenas 15 minutos, mas acredito que posso mostrar algo que vai economizar 
   const handleGenerateBusinessPlan = async () => {
     if (!project) return;
     
-    console.log('=== INICIANDO GERAÇÃO DE PLANO (ProjectView) ===');
-    console.log('Project ID:', project.id);
-    console.log('Idea Text:', project.idea_text);
-    
     setGenerating(true);
     
     try {
@@ -592,8 +579,6 @@ Tenho apenas 15 minutos, mas acredito que posso mostrar algo que vai economizar 
         title: "Gerando plano de negócio...",
         description: "A IA está analisando sua ideia. Isso pode levar alguns minutos.",
       });
-
-      console.log('Calling Supabase Edge Function...');
       
       const { data, error } = await supabase.functions.invoke('generate-business-plan', {
         body: { 
@@ -602,15 +587,11 @@ Tenho apenas 15 minutos, mas acredito que posso mostrar algo que vai economizar 
         }
       });
 
-      console.log('Edge Function Response:', { data, error });
-
       if (error) {
-        console.error('Supabase Function Error:', error);
         throw error;
       }
 
       if (data?.success) {
-        console.log('Success! Business plan generated');
         toast({
           title: "Sucesso!",
           description: "Plano de negócio gerado com sucesso!",
@@ -619,14 +600,10 @@ Tenho apenas 15 minutos, mas acredito que posso mostrar algo que vai economizar 
         // Refresh the project data to show the new plan
         await fetchProjectData();
       } else {
-        console.error('Business plan generation failed:', data);
         throw new Error(data?.error || 'Erro desconhecido');
       }
 
     } catch (error: any) {
-      console.error('=== ERRO NA GERAÇÃO ===');
-      console.error('Error details:', error);
-      console.error('Error message:', error.message);
       
       toast({
         title: "Erro",
@@ -634,7 +611,6 @@ Tenho apenas 15 minutos, mas acredito que posso mostrar algo que vai economizar 
         variant: "destructive",
       });
     } finally {
-      console.log('=== FINALIZANDO GERAÇÃO ===');
       setGenerating(false);
     }
   };

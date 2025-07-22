@@ -79,7 +79,7 @@ const CreatePlan: React.FC = () => {
         .single();
 
       if (error) {
-        console.log('Supabase error, creating local project:', error);
+        // Supabase error, creating local project
         
         // Fallback to local storage
         const localProject = {
@@ -118,7 +118,6 @@ const CreatePlan: React.FC = () => {
       }, 1500);
 
     } catch (err) {
-      console.error('Error creating project:', err);
       toast({
         title: "Erro",
         description: "Não foi possível criar o projeto. Tente novamente.",
