@@ -1,4 +1,7 @@
 project_id = "stisutszkhtrnhctacwh"
 
+[env]
+OPENAI_API_KEY = "your_openai_api_key_here"
+
 [functions.generate-business-plan]
 verify_jwt = false
