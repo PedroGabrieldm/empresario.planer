@@ -706,9 +706,20 @@ Tenho apenas 15 minutos, mas acredito que posso mostrar algo que vai economizar 
         </div>
       </div>
 
-      {/* Floating Navigation */}
-      <div className="fixed top-1/2 right-4 transform -translate-y-1/2 z-30 hidden lg:block">
-        <Card className="p-2">
+      {/* Floating Navigation - Only show on large screens and when not mobile */}
+      <div 
+        className="hidden xl:block fixed"
+        style={{
+          position: 'fixed',
+          top: '50%',
+          right: '20px',
+          transform: 'translateY(-50%)',
+          zIndex: 40,
+          width: '180px'
+        }}
+      >
+        <Card className="p-3 shadow-xl border-2 bg-white backdrop-blur-sm">
+          <div className="text-xs font-semibold text-gray-500 mb-2 px-1">Navegação</div>
           <div className="space-y-1">
             {sections.map((section) => {
               const IconComponent = section.icon;
@@ -718,11 +729,11 @@ Tenho apenas 15 minutos, mas acredito que posso mostrar algo que vai economizar 
                   variant="ghost"
                   size="sm"
                   onClick={() => scrollToSection(section.id)}
-                  className="w-full justify-start text-xs"
+                  className="w-full justify-start text-xs h-8 px-2 hover:bg-blue-50 hover:text-blue-700 transition-all"
                   title={section.title}
                 >
-                  <IconComponent className="h-3 w-3 mr-1" />
-                  {section.title}
+                  <IconComponent className="h-3 w-3 mr-2 flex-shrink-0" />
+                  <span className="truncate text-left">{section.title}</span>
                 </Button>
               );
             })}
